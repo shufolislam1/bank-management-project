@@ -1,15 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .constant import ACCOUNT_TYPE, GENDER_TYPE
 
 
-ACCOUNT_TYPE=(
-    ('Savings', 'Savings'),
-    ('Current', 'Current')
-)
-GENDER_TYPE=(
-    ('Male', 'Male'),
-    ('Female', 'Female')
-)
 # Create your models here.
 class UserBankAccount(models.Model):
     user = models.OneToOneField(User, related_name='account', on_delete= models.CASCADE)
