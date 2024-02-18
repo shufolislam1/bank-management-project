@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 from .models import UserBankAccount, userAddress
 
 class UserRegistrationForm(UserCreationForm):
-    birth_date = forms.DateTimeField(null =True, blank=True)
-    gender = forms.CharField(max_length=20, choices=GENDER_TYPE)
+    account_type = forms.ChoiceField( choices=ACCOUNT_TYPE)
+    birth_date = forms.DateTimeField()
+    gender = forms.ChoiceField( choices=GENDER_TYPE)
     street_address = forms.CharField(max_length=100)
     city = forms.CharField(max_length=100)
     postal_code = forms.IntegerField()
@@ -15,7 +16,7 @@ class UserRegistrationForm(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2', 'first_name', 'last_name', 'email', 'account_type', 'birth_date' 'gender', 'street_address', 'city', 'postal_code', 'country']
+        fields = ['username', 'password1', 'password2', 'first_name', 'last_name', 'email', 'account_type', 'birth_date', 'gender', 'street_address', 'city', 'postal_code', 'country']
         
     def save(self, commit = True):
         our_user = super().save(commit=False)
@@ -44,6 +45,17 @@ class UserRegistrationForm(UserCreationForm):
                 birth_date = birth_date,
                 gender = gender
             )
+        return our_user
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        for filed in self.fields:
+            self.fields[filed].widget.attrs.update({
+                'class':'appearance-none block w-full bg-gray-200 '
+                    'text-gray-700 border border-gray-200 rounded '
+                    'py-3 px-4 leading-tight focus:outline-none '
+                    'focus:bg-white focus:border-gray-500'
+            })
             
             
         
