@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import FormView
 from .forms import UserRegistrationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.urls import reverse_lazy
+from django.contrib.auth.views import LoginView, LogoutView
 
 # Create your views here.
 
@@ -16,4 +17,16 @@ class UserRegistrationView(FormView):
         user = form.save()
         login(self.request, user)
         return super().form_valid(form)
+    
+class UserLoginView(LogoutView):
+    template_name = 'accounts/user_login.html'
+    redirect_authenticated_user = True
+    def get_success_url(self):
+        return reverse_lazy('home')
+    
+class UserLogoutView(LogoutView):
+    def get_success_url(self):
+        if self.request.user.is_authenticated:
+            logout(self.request)
+        return reverse_lazy('home')
     
