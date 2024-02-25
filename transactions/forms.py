@@ -49,11 +49,12 @@ class WithdrawForm(TrasactionForm):
             )
             
         return amount
-    
-    class LoanRequestForm(TrasactionForm):
-        def cleam_amount(self):
-            amount = self.cleaned_data.get('amount')
-            
-            return amount
+
+
+class LoanRequestForm(TrasactionForm):
+    def cleam_amount(self):
+        amount = self.cleaned_data.get('amount')
+        
+        return amount
             
         
