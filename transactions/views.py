@@ -9,7 +9,7 @@ from .constant import DEPOSIT, WITHDRAWAL, LOAN, LOAN_PAID
 from django.contrib import messages
 from django.http import HttpResponse
 from datetime import datetime
-from django.db import Sum
+from django.db.models import Sum
 from django .shortcuts import get_object_or_404, redirect
 
 # Create your views here.
